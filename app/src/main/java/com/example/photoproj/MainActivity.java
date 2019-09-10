@@ -1,8 +1,10 @@
 package com.example.photoproj;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +43,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Button bInputName = findViewById(R.id.buttonInputName);             //кнопка вывода активити
+        final TextInputEditText tietUserName = findViewById(R.id.TextInputEditText);    //поле ввода имени
+        bInputName.setOnClickListener(new View.OnClickListener() {                      // реакция на нажатие кнопки
+            @Override
+            public void onClick(View view) {
+                if(tietUserName.length() < 1) {     // если текста нет, выводим сообщение snackBar об этом
+                    Snackbar.make(view, "Input some text", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {                            // если есть, переходим к следующему активити
+                    Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
