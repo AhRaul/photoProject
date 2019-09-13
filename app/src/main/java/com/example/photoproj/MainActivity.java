@@ -58,6 +58,14 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        Button bClose = findViewById(R.id.buttonClose);             //кнопка вывода активити
+        bClose.setOnClickListener(new View.OnClickListener() {                      // реакция на нажатие кнопки
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
