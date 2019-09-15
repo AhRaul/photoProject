@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //добавление кнопки возврата в тулбар !!! кнопка появилась, но тут конфликт с уже существующей кнопкой в тулбаре NavigationDrawer, которое просили сделать на 2 задании) !!!
     }
 
     @Override
