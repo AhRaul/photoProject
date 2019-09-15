@@ -19,6 +19,17 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static boolean isAuthentication = false;        //авторизован ли пользователь
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!isAuthentication) {                             //первый запуск приложения открывает активити авторизации, если никто не авторизован
+            Intent intent = new Intent(this, InputActivity.class);
+            startActivity(intent);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,29 +54,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Button bInputName = findViewById(R.id.buttonInputName);             //кнопка вывода активити
-        final TextInputEditText tietUserName = findViewById(R.id.TextInputEditText);    //поле ввода имени
-        bInputName.setOnClickListener(new View.OnClickListener() {                      // реакция на нажатие кнопки
-            @Override
-            public void onClick(View view) {
-                if(tietUserName.length() < 1) {     // если текста нет, выводим сообщение snackBar об этом
-                    Snackbar.make(view, "Input some text", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {                            // если есть, переходим к следующему активити
-                    Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        Button bClose = findViewById(R.id.buttonClose);             //кнопка вывода активити
-        bClose.setOnClickListener(new View.OnClickListener() {                      // реакция на нажатие кнопки
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -123,5 +111,9 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public static void setIsAuthentication(boolean isAuthentication) {
+        MainActivity.isAuthentication = isAuthentication;
     }
 }
