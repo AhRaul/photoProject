@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_fruit) {
             imageView.setImageResource(R.drawable.fruits);
         } else if (id == R.id.nav_vegetables) {
-            imageView.setImageResource(R.drawable.vegetables);
+//            imageView.setImageResource(R.drawable.vegetables);
+            Intent intent = new Intent(MainActivity.this, TabActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_nature) {
             imageView.setImageResource(R.drawable.nature);
         }
