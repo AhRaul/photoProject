@@ -18,6 +18,10 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String EXTRA_THEME = "EXTRA_THEME";
+
+    private int themeNumber;
+
     private static boolean isAuthentication = false;        //авторизован ли пользователь
     ImageView imageView;
 
@@ -33,6 +37,29 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Нужно для смены главной темы, и верхней шторки
+        if(savedInstanceState != null) {
+
+            themeNumber = savedInstanceState.getInt(EXTRA_THEME);
+
+            switch (themeNumber) {
+                case 0:
+                    setTheme(R.style.AppTheme_NoActionBar);
+                    break;
+                case 1:
+                    setTheme(R.style.YellowTheme_NoActionBar);
+                    break;
+                case 2:
+                    setTheme(R.style.NightTheme_NoActionBar);
+                    break;
+            }
+        }
+
+        initActivity();
+    }
+
+    private void initActivity() {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,8 +81,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //добавление кнопки возврата в тулбар !!! кнопка появилась, но тут конфликт с уже существующей кнопкой в тулбаре NavigationDrawer, которое просили сделать на 2 задании) !!!
 
         imageView = findViewById(R.id.imageView);
     }
@@ -85,7 +110,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_theme1) {
+            themeNumber = 0;
+            recreate();
+            return true;
+        } if (id == R.id.action_settings_theme2) {
+            themeNumber = 1;
+            recreate();
+            return true;
+        } if (id == R.id.action_settings_theme3) {
+            themeNumber = 2;
+            recreate();
             return true;
         }
 
@@ -115,5 +150,11 @@ public class MainActivity extends AppCompatActivity
 
     public static void setIsAuthentication(boolean isAuthentication) {
         MainActivity.isAuthentication = isAuthentication;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(EXTRA_THEME, themeNumber);
     }
 }
